@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--第一种方式-->
+    <cc.ibooker.zdropdownmenulib.ZDropDownMenu
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--菜单项-->
+        <LinearLayout
+            android:id="@+id/tabMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+    </cc.ibooker.zdropdownmenulib.ZDropDownMenu>
+
+</LinearLayout>
