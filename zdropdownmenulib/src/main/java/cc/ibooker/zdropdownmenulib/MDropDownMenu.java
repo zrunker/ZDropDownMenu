@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author 邹峰立
  */
-public class ZDropDownMenu extends LinearLayout {
+public class MDropDownMenu extends LinearLayout {
     // 顶部菜单布局
     private LinearLayout tabMenuView;
     // 底部容器，包含popupMenuViews，maskView
@@ -52,15 +52,15 @@ public class ZDropDownMenu extends LinearLayout {
     // tabMenuView里面选中的tab位置，-1表示未选中
     private int currentTabPosition = -1;
 
-    public ZDropDownMenu(Context context) {
+    public MDropDownMenu(Context context) {
         super(context, null);
     }
 
-    public ZDropDownMenu(Context context, AttributeSet attrs) {
+    public MDropDownMenu(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ZDropDownMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MDropDownMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
 
