@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZDropDownMenu.iml" filepath="$PROJECT_DIR$/ZDropDownMenu.iml" />
+      <module fileurl="file://E:\Android_Stadio\WorkSpace\ZDropDownMenu\ZDropDownMenu.iml" filepath="E:\Android_Stadio\WorkSpace\ZDropDownMenu\ZDropDownMenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\Android_Stadio\WorkSpace\ZDropDownMenu\app\app.iml" filepath="E:\Android_Stadio\WorkSpace\ZDropDownMenu\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/zdropdownmenulib/zdropdownmenulib.iml" filepath="$PROJECT_DIR$/zdropdownmenulib/zdropdownmenulib.iml" />
+      <module fileurl="file://E:\Android_Stadio\WorkSpace\ZDropDownMenu\zdropdownmenulib\zdropdownmenulib.iml" filepath="E:\Android_Stadio\WorkSpace\ZDropDownMenu\zdropdownmenulib\zdropdownmenulib.iml" />
     </modules>
   </component>
 </project>

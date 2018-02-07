@@ -130,4 +130,5 @@ public class DropDownMenu extends FrameLayout {
     public void setCloseMenuListener(CloseMenuListener closeMenuListener) {
         this.closeMenuListener = closeMenuListener;
     }
+
 }
