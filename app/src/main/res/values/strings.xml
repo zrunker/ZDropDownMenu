@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">ZDropDownMenu</string>
+    <string name="app_name">下拉菜单</string>
+    <string name="classify">分类</string>
+    <string name="time">时间</string>
+    <string name="sort">排序</string>
+    <string name="choose">筛选</string>
+    <string name="sex_rule">性别要求</string>
+    <string name="student_rule">学生党</string>
+    <string name="headth_rule">健康证</string>
+    <string name="identify_rule">是否认证</string>
+    <string name="age_rule">年龄段</string>
+    <string name="height_rule">身高(CM)</string>
+    <string name="weight_rule">体重(KG)</string>
+    <string name="choose_sure">确定</string>
+    <string name="choose_reset">重置</string>
+    <string name="no_rule">不限</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="age_top">20岁以下</string>
+    <string name="age_center_one">20~30岁</string>
+    <string name="age_center_two">30~40岁</string>
+    <string name="age_bottom">40岁以上</string>
+    <string name="height_top">160CM以下</string>
+    <string name="height_center">160~175CM</string>
+    <string name="height_bottom">175CM以上</string>
+    <string name="weight_top">50KG以下</string>
+    <string name="weight_center">50~70KG</string>
+    <string name="weight_bottom">70KG以上</string>
 </resources>

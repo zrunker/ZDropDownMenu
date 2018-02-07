@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="42dp"
+    android:background="@drawable/gray_selector"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:paddingBottom="0.5dp">
+
+    <!-- 分类 -->
+    <RelativeLayout
+        android:id="@+id/layout_classify"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gray_selector">
+
+        <TextView
+            android:id="@+id/tv_classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:text="@string/classify"
+            android:textColor="#555555"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_classify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/tv_classify"
+            android:layout_toRightOf="@id/tv_classify"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_down" />
+    </RelativeLayout>
+
+    <!-- 时间 -->
+    <RelativeLayout
+        android:id="@+id/layout_time"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gray_selector">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:text="@string/time"
+            android:textColor="#555555"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/tv_time"
+            android:layout_toRightOf="@id/tv_time"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_down" />
+    </RelativeLayout>
+
+    <!-- 排序 -->
+    <RelativeLayout
+        android:id="@+id/layout_sort"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gray_selector">
+
+        <TextView
+            android:id="@+id/tv_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:text="@string/sort"
+            android:textColor="#555555"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/tv_sort"
+            android:layout_toRightOf="@id/tv_sort"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_down" />
+    </RelativeLayout>
+
+    <!-- 筛选 -->
+    <RelativeLayout
+        android:id="@+id/layout_choose"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/gray_selector">
+
+        <TextView
+            android:id="@+id/tv_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="3dp"
+            android:layout_marginRight="3dp"
+            android:text="@string/choose"
+            android:textColor="#555555"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/tv_choose"
+            android:layout_toRightOf="@id/tv_choose"
+            android:contentDescription="@null"
+            android:src="@mipmap/icon_down" />
+    </RelativeLayout>
+
+</LinearLayout>

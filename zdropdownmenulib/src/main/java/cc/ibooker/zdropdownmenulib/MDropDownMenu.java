@@ -252,7 +252,7 @@ public class MDropDownMenu extends LinearLayout {
      */
     public int dpToPx(float value) {
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm) + 0.5);
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm);
     }
 
     /**

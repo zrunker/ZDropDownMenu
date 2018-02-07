@@ -27,6 +27,8 @@ public class ZDropDownMenu extends LinearLayout {
     private LinearLayout tabMenuView;
     // 底部容器，包含popupMenuViews，maskView
     private FrameLayout containerView;
+    // 内容区
+    private View contentView;
     // 弹出菜单父布局
     private FrameLayout popupMenuViews;
     // 遮罩半透明View，点击可关闭DropDownMenu
@@ -109,17 +111,17 @@ public class ZDropDownMenu extends LinearLayout {
     /**
      * 初始化DropDownMenu
      *
-     * @param tabTexts   头部标题
-     * @param tags       头部标签
-     * @param popupViews 弹框View内容
+     * @param tabTexts    头部标题
+     * @param popupViews  弹框View内容
+     * @param contentView 内容区View
      */
-    public void setDropDownMenu(@NonNull List<String> tabTexts, @NonNull List<String> tags, @NonNull List<View> popupViews) {
-        if (tabTexts.size() != popupViews.size() || tabTexts.size() != tags.size()) {
-            throw new IllegalArgumentException("params not match, tabTexts.size() should be equal popupViews.size() and tabTexts.size() should be equal tags.size()");
+    public void setDropDownMenu(@NonNull List<String> tabTexts, @NonNull List<View> popupViews, @NonNull View contentView) {
+        if (tabTexts.size() != popupViews.size()) {
+            throw new IllegalArgumentException("params not match, tabTexts.size() should be equal popupViews.size()");
         }
 
         for (int i = 0; i < tabTexts.size(); i++) {
-            initTab(i, tabTexts, tags.get(i));
+            initTab(i, tabTexts);
         }
 
         maskView = new View(getContext());
@@ -141,8 +143,10 @@ public class ZDropDownMenu extends LinearLayout {
             popupMenuViews.addView(popupViews.get(i), i);
         }
 
-        containerView.addView(maskView, 0);
-        containerView.addView(popupMenuViews, 1);
+        this.contentView = contentView;
+        containerView.addView(contentView, 0);
+        containerView.addView(maskView, 1);
+        containerView.addView(popupMenuViews, 2);
     }
 
     /**
@@ -150,9 +154,8 @@ public class ZDropDownMenu extends LinearLayout {
      *
      * @param i        tabTexts列表下标
      * @param tabTexts 菜单tab显示文本集
-     * @param tag      菜单tab标识
      */
-    private void initTab(final int i, List<String> tabTexts, final String tag) {
+    private void initTab(final int i, List<String> tabTexts) {
         final TextView textView = new TextView(getContext());
         textView.setSingleLine();
         textView.setEllipsize(TextUtils.TruncateAt.END);
@@ -173,7 +176,6 @@ public class ZDropDownMenu extends LinearLayout {
                     clickMenuListener.onClickMenu(textView, i);
             }
         });
-        tabMenuView.setTag(tag);
         tabMenuView.addView(textView);
         // 添加分割线
         if (i < tabTexts.size() - 1) {
@@ -200,6 +202,15 @@ public class ZDropDownMenu extends LinearLayout {
             if (closeMenuListener != null) {
                 closeMenuListener.onCloseMenu();
             }
+        }
+    }
+
+    /**
+     * 改变tab文字
+     */
+    public void setTabText(String text) {
+        if (currentTabPosition != -1) {
+            ((TextView) tabMenuView.getChildAt(currentTabPosition)).setText(text);
         }
     }
 
@@ -252,7 +263,7 @@ public class ZDropDownMenu extends LinearLayout {
      */
     public int dpToPx(float value) {
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        return (int) (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm) + 0.5);
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, dm);
     }
 
     /**

@@ -8,22 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+
+import java.util.List;
 
 /**
- * 自定义下拉菜单布局
+ * 自定义下拉菜单内容区布局
  * <p>
  * Created by 邹峰立 on 2018/2/5 0005.
  */
-public class DropDownMenu extends LinearLayout {
-    // 下拉菜单是否已经展示
-    private boolean isShow;
-    // 底部容器，包含contentView，maskView
-    private FrameLayout containerView;
+public class DropDownMenu extends FrameLayout {
     // 弹出菜单父布局
-    private View contentView;
+    private FrameLayout popupMenuViews;
     // 遮罩半透明View，点击可关闭DropDownMenu
     private View maskView;
+    // tabMenuView里面选中的tab位置，-1表示未选中
+    private int currentTabPosition = -1;
 
     public DropDownMenu(Context context) {
         this(context, null);
@@ -35,66 +34,50 @@ public class DropDownMenu extends LinearLayout {
 
     public DropDownMenu(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setOrientation(VERTICAL);
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        setLayoutParams(layoutParams);
-
-        // 添加底部内容区域containerView
-        containerView = new FrameLayout(context);
-        containerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        addView(containerView);
+        this.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
     }
 
     /**
-     * 展示下拉菜单
+     * 设置下拉菜单
      *
-     * @param view 待展示菜单内容
+     * @param popupViews 待展示菜单内容集
      */
-    public void showDropDownMenu(@NonNull View view) {
-        if (isShow)
-            closeMenu();
-        if (containerView != null) {
-            containerView.removeAllViews();
-            // 遮罩层
-            maskView = new View(getContext());
-            maskView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-            int maskColor = 0x77777777;
-            maskView.setBackgroundColor(maskColor);
-            maskView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    closeMenu();
-                }
-            });
-            maskView.setVisibility(GONE);
-            // 菜单内容
-            contentView = view;
-            // 内容区添加内容
-            containerView.addView(maskView, 0);
-            containerView.addView(containerView, 1);
-            // 设置开启菜单动画
-            contentView.setVisibility(View.VISIBLE);
-            contentView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_in));
-            maskView.setVisibility(VISIBLE);
-            maskView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_mask_in));
-            // 标记正在展示菜单
-            isShow = true;
-        }
-    }
+    public void setDropDownMenu(@NonNull List<View> popupViews) {
+        maskView = new View(getContext());
+        maskView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        maskView.setBackgroundColor(0x77777777);
+        maskView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 关闭下拉菜单
+                closeMenu();
+            }
+        });
+        maskView.setVisibility(GONE);
 
+        popupMenuViews = new FrameLayout(getContext());
+        popupMenuViews.setVisibility(GONE);
+        for (int i = 0; i < popupViews.size(); i++) {
+            popupViews.get(i).setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            popupMenuViews.addView(popupViews.get(i), i);
+        }
+
+        this.addView(maskView, 0);
+        this.addView(popupMenuViews, 1);
+    }
 
     /**
      * 关闭菜单
      */
     public void closeMenu() {
-        if (isShow) {
+        if (currentTabPosition != -1) {
             // 设置菜单关闭动画
-            contentView.setVisibility(View.GONE);
-            contentView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_out));
+            popupMenuViews.setVisibility(View.GONE);
+            popupMenuViews.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_out));
             maskView.setVisibility(GONE);
             maskView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_mask_out));
             // 标记关闭菜单
-            isShow = false;
+            currentTabPosition = -1;
             // 关闭菜单事件监听
             if (closeMenuListener != null) {
                 closeMenuListener.onCloseMenuListener();
@@ -102,9 +85,37 @@ public class DropDownMenu extends LinearLayout {
         }
     }
 
+    /**
+     * 切换菜单
+     *
+     * @param target 目标textView
+     */
+    public void switchMenu(View target) {
+        for (int i = 0; i < popupMenuViews.getChildCount(); i++) {
+            if (target == popupMenuViews.getChildAt(i)) {
+                if (currentTabPosition == i) {
+                    closeMenu();
+                } else {// 弹窗菜单
+                    if (currentTabPosition == -1) {// 初始化状态
+                        popupMenuViews.setVisibility(View.VISIBLE);
+                        popupMenuViews.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_in));
+                        maskView.setVisibility(VISIBLE);
+                        maskView.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_mask_in));
+                        popupMenuViews.getChildAt(i).setVisibility(View.VISIBLE);
+                    } else {
+                        popupMenuViews.getChildAt(i).setVisibility(View.VISIBLE);
+                    }
+                    currentTabPosition = i;
+                }
+            } else {
+                popupMenuViews.getChildAt(i).setVisibility(View.GONE);
+            }
+        }
+    }
+
     // 获取菜单是否正在展示状态
-    public boolean isShow() {
-        return isShow;
+    public boolean isShowing() {
+        return currentTabPosition != -1;
     }
 
     /**
