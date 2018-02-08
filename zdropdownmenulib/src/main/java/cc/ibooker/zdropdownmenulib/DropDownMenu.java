@@ -34,7 +34,7 @@ public class DropDownMenu extends FrameLayout {
 
     public DropDownMenu(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        this.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
     }
 
     /**
@@ -44,7 +44,7 @@ public class DropDownMenu extends FrameLayout {
      */
     public void setDropDownMenu(@NonNull List<View> popupViews) {
         maskView = new View(getContext());
-        maskView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        maskView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         maskView.setBackgroundColor(0x77777777);
         maskView.setOnClickListener(new OnClickListener() {
             @Override

@@ -7,4 +7,13 @@
     <color name="colorTitle">#FE7517</color>
     <!-- 白色 -->
     <color name="white">#FFFFFF</color>
+
+
+    <color name="textSelectedColor">#FE7517</color>
+    <color name="textUnselectedColor">#555555</color>
+    <color name="maskColor">#77777777</color>
+    <color name="underlineColor">#cccccc</color>
+    <color name="dividerColor">#cccccc</color>
+    <color name="menuBackgroundColor">#FFFFFF</color>
+
 </resources>

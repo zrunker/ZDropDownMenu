@@ -27,7 +27,7 @@ import cc.ibooker.zdropdownmenulib.DropDownMenu;
  * Created by 邹峰立 on 2018/2/7.
  */
 public class ThirdActivity extends AppCompatActivity implements View.OnClickListener {
-    // 菜单内容区
+    // 内容区
     private TextView contentTv;
     // 菜单项
     private LinearLayout menuLayout;

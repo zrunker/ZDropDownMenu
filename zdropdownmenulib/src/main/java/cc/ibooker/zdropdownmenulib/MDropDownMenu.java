@@ -1,5 +1,6 @@
 package cc.ibooker.zdropdownmenulib;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
@@ -13,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -36,9 +36,9 @@ public class MDropDownMenu extends LinearLayout {
     // 分割线颜色
     private int dividerColor = 0xffcccccc;
     // tab文本选中颜色
-    private int textSelectedColor = 0xff890c85;
+    private int textSelectedColor = 0xffFE7517;
     // tab文本未选中颜色
-    private int textUnselectedColor = 0xff111111;
+    private int textUnselectedColor = 0xff555555;
     // menu背景
     private int menuBackgroundColor = 0xffffffff;
     // 遮罩颜色
@@ -60,6 +60,7 @@ public class MDropDownMenu extends LinearLayout {
         this(context, attrs, 0);
     }
 
+    @SuppressLint("CustomViewStyleable")
     public MDropDownMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
@@ -91,7 +92,7 @@ public class MDropDownMenu extends LinearLayout {
         tabMenuView = new LinearLayout(context);
         tabMenuView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         tabMenuView.setBackgroundColor(menuBackgroundColor);
-        tabMenuView.setOrientation(VERTICAL);
+        tabMenuView.setOrientation(HORIZONTAL);
         addView(tabMenuView, 0);
 
         // 创建下划线
@@ -153,34 +154,35 @@ public class MDropDownMenu extends LinearLayout {
      * @param tag      菜单tab标识
      */
     private void initTab(final int i, List<String> tabTexts, final String tag) {
-        final TextView textView = new TextView(getContext());
-        textView.setSingleLine();
-        textView.setEllipsize(TextUtils.TruncateAt.END);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, menuTextSize);
-        textView.setLayoutParams(new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        textView.setTextColor(textUnselectedColor);
-        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
-        textView.setText(tabTexts.get(i));
-        textView.setPadding(dpToPx(5), dpToPx(10), dpToPx(5), dpToPx(10));
-        // 添加点击事件
-        textView.setOnClickListener(new OnClickListener() {
+        final MenuItemView menuItemView = new MenuItemView(getContext());
+        menuItemView.init(textSelectedColor, textUnselectedColor, menuSelectedIcon, menuUnselectedIcon);
+        menuItemView.setItemLayoutParams(new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1))
+                .setItemTag(tag)
+                .setTvSingleLine()
+                .setTvEllipsize(TextUtils.TruncateAt.END)
+                .setTvGravity(Gravity.CENTER)
+                .setTextSize(TypedValue.COMPLEX_UNIT_PX, menuTextSize)
+                .setTextColor(textUnselectedColor)
+                .setText(tabTexts.get(i))
+                .setTvPadding(dpToPx(5), dpToPx(10), dpToPx(5), dpToPx(10));
+
+        menuItemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchMenu(textView);
+                switchMenu(menuItemView);
                 // 执行点击菜单事件
                 if (clickMenuListener != null)
-                    clickMenuListener.onClickMenu(textView, i);
+                    clickMenuListener.onClickMenu(tag);
             }
         });
-        tabMenuView.setTag(tag);
-        tabMenuView.addView(textView);
+
+        tabMenuView.addView(menuItemView);
         // 添加分割线
         if (i < tabTexts.size() - 1) {
             View view = new View(getContext());
             view.setLayoutParams(new LayoutParams(dpToPx(0.5f), LayoutParams.MATCH_PARENT));
             view.setBackgroundColor(dividerColor);
-            addView(view);
+            tabMenuView.addView(view);
         }
     }
 
@@ -189,8 +191,7 @@ public class MDropDownMenu extends LinearLayout {
      */
     public void closeMenu() {
         if (currentTabPosition != -1) {
-            ((TextView) tabMenuView.getChildAt(currentTabPosition)).setTextColor(textUnselectedColor);
-            ((TextView) tabMenuView.getChildAt(currentTabPosition)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
+            ((MenuItemView) tabMenuView.getChildAt(currentTabPosition)).setTextColor(textUnselectedColor).setImageResource(menuUnselectedIcon);
             popupMenuViews.setVisibility(View.GONE);
             popupMenuViews.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_out));
             maskView.setVisibility(GONE);
@@ -215,7 +216,7 @@ public class MDropDownMenu extends LinearLayout {
      *
      * @param target 目标textView
      */
-    public void switchMenu(TextView target) {
+    public void switchMenu(MenuItemView target) {
         for (int i = 0; i < tabMenuView.getChildCount(); i = i + 2) {
             if (target == tabMenuView.getChildAt(i)) {
                 if (currentTabPosition == i) {
@@ -231,15 +232,13 @@ public class MDropDownMenu extends LinearLayout {
                         popupMenuViews.getChildAt(i / 2).setVisibility(View.VISIBLE);
                     }
                     currentTabPosition = i;
-                    ((TextView) tabMenuView.getChildAt(i)).setTextColor(textSelectedColor);
-                    ((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuSelectedIcon), null);
+                    ((MenuItemView) tabMenuView.getChildAt(i)).setTextColor(textSelectedColor).setImageResource(menuSelectedIcon);
                     // 执行菜单切换事件
                     if (switchMenuListener != null)
                         switchMenuListener.onSwitchMenu();
                 }
             } else {
-                ((TextView) tabMenuView.getChildAt(i)).setTextColor(textUnselectedColor);
-                ((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
+                ((MenuItemView) tabMenuView.getChildAt(i)).setTextColor(textUnselectedColor).setImageResource(menuUnselectedIcon);
                 popupMenuViews.getChildAt(i / 2).setVisibility(View.GONE);
             }
         }
@@ -272,7 +271,7 @@ public class MDropDownMenu extends LinearLayout {
      * 定义接口，对菜单tab点击事件监听
      */
     public interface ClickMenuListener {
-        void onClickMenu(View v, int num);
+        void onClickMenu(String tag);
     }
 
     private ClickMenuListener clickMenuListener;

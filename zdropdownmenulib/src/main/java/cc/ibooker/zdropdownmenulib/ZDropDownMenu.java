@@ -1,5 +1,6 @@
 package cc.ibooker.zdropdownmenulib;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
@@ -38,9 +39,9 @@ public class ZDropDownMenu extends LinearLayout {
     // 分割线颜色
     private int dividerColor = 0xffcccccc;
     // tab文本选中颜色
-    private int textSelectedColor = 0xff890c85;
+    private int textSelectedColor = 0xffFE7517;
     // tab文本未选中颜色
-    private int textUnselectedColor = 0xff111111;
+    private int textUnselectedColor = 0xff555555;
     // menu背景
     private int menuBackgroundColor = 0xffffffff;
     // 遮罩颜色
@@ -62,6 +63,7 @@ public class ZDropDownMenu extends LinearLayout {
         this(context, attrs, 0);
     }
 
+    @SuppressLint("CustomViewStyleable")
     public ZDropDownMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(VERTICAL);
@@ -93,7 +95,7 @@ public class ZDropDownMenu extends LinearLayout {
         tabMenuView = new LinearLayout(context);
         tabMenuView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         tabMenuView.setBackgroundColor(menuBackgroundColor);
-        tabMenuView.setOrientation(VERTICAL);
+        tabMenuView.setOrientation(HORIZONTAL);
         addView(tabMenuView, 0);
 
         // 创建下划线
@@ -104,7 +106,7 @@ public class ZDropDownMenu extends LinearLayout {
 
         // 初始化containerView并将其添加到DropDownMenu
         containerView = new FrameLayout(context);
-        containerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        containerView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         addView(containerView, 2);
     }
 
@@ -155,34 +157,36 @@ public class ZDropDownMenu extends LinearLayout {
      * @param i        tabTexts列表下标
      * @param tabTexts 菜单tab显示文本集
      */
-    private void initTab(final int i, List<String> tabTexts) {
-        final TextView textView = new TextView(getContext());
-        textView.setSingleLine();
-        textView.setEllipsize(TextUtils.TruncateAt.END);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, menuTextSize);
-        textView.setLayoutParams(new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-        textView.setTextColor(textUnselectedColor);
-        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
-        textView.setText(tabTexts.get(i));
-        textView.setPadding(dpToPx(5), dpToPx(10), dpToPx(5), dpToPx(10));
-        // 添加点击事件
-        textView.setOnClickListener(new OnClickListener() {
+    private void initTab(final int i, final List<String> tabTexts) {
+        final MenuItemView menuItemView = new MenuItemView(getContext());
+        menuItemView.init(textSelectedColor, textUnselectedColor, menuSelectedIcon, menuUnselectedIcon);
+        menuItemView.setItemLayoutParams(new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1))
+                .setItemTag(tabTexts.get(i))
+                .setTvSingleLine()
+                .setTvEllipsize(TextUtils.TruncateAt.END)
+                .setTvGravity(Gravity.CENTER)
+                .setTextSize(TypedValue.COMPLEX_UNIT_PX, menuTextSize)
+                .setTextColor(textUnselectedColor)
+                .setText(tabTexts.get(i))
+                .setTvPadding(dpToPx(5), dpToPx(10), dpToPx(5), dpToPx(10));
+
+        menuItemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchMenu(textView);
+                switchMenu(menuItemView);
                 // 执行点击菜单事件
                 if (clickMenuListener != null)
-                    clickMenuListener.onClickMenu(textView, i);
+                    clickMenuListener.onClickMenu(tabTexts.get(i));
             }
         });
-        tabMenuView.addView(textView);
+
+        tabMenuView.addView(menuItemView);
         // 添加分割线
         if (i < tabTexts.size() - 1) {
             View view = new View(getContext());
             view.setLayoutParams(new LayoutParams(dpToPx(0.5f), LayoutParams.MATCH_PARENT));
             view.setBackgroundColor(dividerColor);
-            addView(view);
+            tabMenuView.addView(view);
         }
     }
 
@@ -191,8 +195,7 @@ public class ZDropDownMenu extends LinearLayout {
      */
     public void closeMenu() {
         if (currentTabPosition != -1) {
-            ((TextView) tabMenuView.getChildAt(currentTabPosition)).setTextColor(textUnselectedColor);
-            ((TextView) tabMenuView.getChildAt(currentTabPosition)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
+            ((MenuItemView) tabMenuView.getChildAt(currentTabPosition)).setTextColor(textUnselectedColor).setImageResource(menuUnselectedIcon);
             popupMenuViews.setVisibility(View.GONE);
             popupMenuViews.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dd_menu_out));
             maskView.setVisibility(GONE);
@@ -226,7 +229,7 @@ public class ZDropDownMenu extends LinearLayout {
      *
      * @param target 目标textView
      */
-    public void switchMenu(TextView target) {
+    public void switchMenu(MenuItemView target) {
         for (int i = 0; i < tabMenuView.getChildCount(); i = i + 2) {
             if (target == tabMenuView.getChildAt(i)) {
                 if (currentTabPosition == i) {
@@ -242,15 +245,13 @@ public class ZDropDownMenu extends LinearLayout {
                         popupMenuViews.getChildAt(i / 2).setVisibility(View.VISIBLE);
                     }
                     currentTabPosition = i;
-                    ((TextView) tabMenuView.getChildAt(i)).setTextColor(textSelectedColor);
-                    ((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuSelectedIcon), null);
+                    ((MenuItemView) tabMenuView.getChildAt(i)).setTextColor(textSelectedColor).setImageResource(menuSelectedIcon);
                     // 执行菜单切换事件
                     if (switchMenuListener != null)
                         switchMenuListener.onSwitchMenu();
                 }
             } else {
-                ((TextView) tabMenuView.getChildAt(i)).setTextColor(textUnselectedColor);
-                ((TextView) tabMenuView.getChildAt(i)).setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnselectedIcon), null);
+                ((MenuItemView) tabMenuView.getChildAt(i)).setTextColor(textUnselectedColor).setImageResource(menuUnselectedIcon);
                 popupMenuViews.getChildAt(i / 2).setVisibility(View.GONE);
             }
         }
@@ -283,7 +284,7 @@ public class ZDropDownMenu extends LinearLayout {
      * 定义接口，对菜单tab点击事件监听
      */
     public interface ClickMenuListener {
-        void onClickMenu(View v, int num);
+        void onClickMenu(String tag);
     }
 
     private ClickMenuListener clickMenuListener;

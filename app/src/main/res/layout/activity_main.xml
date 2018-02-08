@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cc.ibooker.zdropdownmenulib.ZDropDownMenu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/zdropdownmenu"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" />
+    android:layout_height="wrap_content"
+    app:dividerColor="@color/dividerColor"
+    app:maskColor="@color/maskColor"
+    app:menuBackgroundColor="@color/menuBackgroundColor"
+    app:menuSelectedIcon="@mipmap/icon_up"
+    app:menuTextSize="@dimen/menuTextSize"
+    app:menuUnselectedIcon="@mipmap/icon_down"
+    app:textSelectedColor="@color/textSelectedColor"
+    app:textUnselectedColor="@color/textUnselectedColor"
+    app:underlineColor="@color/underlineColor" />
