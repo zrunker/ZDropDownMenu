@@ -1,13 +1,12 @@
 package cc.ibooker.zdropdownmenu;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         popupViews.add(scrollView);
 
         // 内容区
-        contentView = inflater.inflate(R.layout.layout_listview, zDropDownMenu, false);
+        contentView = inflater.inflate(R.layout.layout_content, zDropDownMenu, false);
 
 
         zDropDownMenu.setDropDownMenu(Arrays.asList(tabTexts), popupViews, contentView);

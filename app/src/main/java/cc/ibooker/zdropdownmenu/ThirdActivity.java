@@ -31,7 +31,7 @@ public class ThirdActivity extends AppCompatActivity implements View.OnClickList
     private TextView contentTv;
     // 菜单项
     private LinearLayout menuLayout;
-    private RelativeLayout classifyLayout, timeLayout, sortLayout, chooseLayout;
+    private LinearLayout classifyLayout, timeLayout, sortLayout, chooseLayout;
     private TextView classifyTv, timeTv, sortTv, chooseTv;
     private ImageView classifyImg, timeImg, sortImg, chooseImg;
     // 菜单内容区

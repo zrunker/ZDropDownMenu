@@ -28,8 +28,6 @@ public class ZDropDownMenu extends LinearLayout {
     private LinearLayout tabMenuView;
     // 底部容器，包含popupMenuViews，maskView
     private FrameLayout containerView;
-    // 内容区
-    private View contentView;
     // 弹出菜单父布局
     private FrameLayout popupMenuViews;
     // 遮罩半透明View，点击可关闭DropDownMenu
@@ -145,7 +143,6 @@ public class ZDropDownMenu extends LinearLayout {
             popupMenuViews.addView(popupViews.get(i), i);
         }
 
-        this.contentView = contentView;
         containerView.addView(contentView, 0);
         containerView.addView(maskView, 1);
         containerView.addView(popupMenuViews, 2);

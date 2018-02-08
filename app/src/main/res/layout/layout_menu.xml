@@ -8,18 +8,18 @@
     android:paddingBottom="0.5dp">
 
     <!-- 分类 -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_classify"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/gray_selector">
+        android:background="@drawable/gray_selector"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_classify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginEnd="3dp"
             android:layout_marginRight="3dp"
             android:text="@string/classify"
@@ -30,26 +30,23 @@
             android:id="@+id/iv_classify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/tv_classify"
-            android:layout_toRightOf="@id/tv_classify"
             android:contentDescription="@null"
             android:src="@mipmap/icon_down" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- 时间 -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_time"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/gray_selector">
+        android:background="@drawable/gray_selector"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginEnd="3dp"
             android:layout_marginRight="3dp"
             android:text="@string/time"
@@ -60,26 +57,23 @@
             android:id="@+id/iv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/tv_time"
-            android:layout_toRightOf="@id/tv_time"
             android:contentDescription="@null"
             android:src="@mipmap/icon_down" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- 排序 -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_sort"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/gray_selector">
+        android:background="@drawable/gray_selector"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginEnd="3dp"
             android:layout_marginRight="3dp"
             android:text="@string/sort"
@@ -90,26 +84,23 @@
             android:id="@+id/iv_sort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/tv_sort"
-            android:layout_toRightOf="@id/tv_sort"
             android:contentDescription="@null"
             android:src="@mipmap/icon_down" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- 筛选 -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_choose"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/gray_selector">
+        android:background="@drawable/gray_selector"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_choose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginEnd="3dp"
             android:layout_marginRight="3dp"
             android:text="@string/choose"
@@ -120,11 +111,8 @@
             android:id="@+id/iv_choose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/tv_choose"
-            android:layout_toRightOf="@id/tv_choose"
             android:contentDescription="@null"
             android:src="@mipmap/icon_down" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
