@@ -64,6 +64,7 @@ public class SecondActivity extends AppCompatActivity {
         popupViews.add(scrollView);
 
         mDropDownMenu.setDropDownMenu(Arrays.asList(tabTexts), Arrays.asList(tags), popupViews);
+
         // 点击事件监听
         mDropDownMenu.setClickMenuListener(new MDropDownMenu.ClickMenuListener() {
             @Override
@@ -96,7 +97,9 @@ public class SecondActivity extends AppCompatActivity {
         // 设置内容区到顶部距离
         mDropDownMenu.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         int menuLayoutHeight = mDropDownMenu.getMeasuredHeight();
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) contentTv.getLayoutParams();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) contentTv.getLayoutParams();
+        params.width = FrameLayout.LayoutParams.MATCH_PARENT;
+        params.height = FrameLayout.LayoutParams.MATCH_PARENT;
         params.setMargins(0, menuLayoutHeight, 0, 0);
         contentTv.setLayoutParams(params);
     }
